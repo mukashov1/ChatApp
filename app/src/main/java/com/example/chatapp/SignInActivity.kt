@@ -141,6 +141,7 @@ class SignInActivity : AppCompatActivity() {
             signUpButton.text = "Sign In"
             toggleSignInTextView.text = "Tap To Sing Up"
             repeatPasswordEditText.visibility = View.GONE
+            nameEditText.visibility = View.GONE
         }
     }
 }

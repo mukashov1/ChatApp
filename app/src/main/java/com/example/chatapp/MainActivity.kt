@@ -92,6 +92,13 @@ class MainActivity : AppCompatActivity() {
             sendMessageBtn.isEnabled = false
         }
 
+        sendImageBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/jpeg"
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true)
+            startActivityForResult(Intent.createChooser(intent,"Choose an image!"), 123)
+        }
+
         messagesRef.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 messageAdapter.add(snapshot.getValue<Message>())
@@ -124,6 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -135,7 +143,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
 
         })
@@ -152,12 +159,20 @@ class MainActivity : AppCompatActivity() {
 
         return when (item.itemId) {
             R.id.sign_out -> {
-                Firebase.auth.signOut()
                 startActivity(Intent(this, SignInActivity::class.java))
+                Firebase.auth.signOut()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123 && resultCode == RESULT_OK) {
+            val selectedImageUri = data?.data
+        }
+
     }
 
 }
