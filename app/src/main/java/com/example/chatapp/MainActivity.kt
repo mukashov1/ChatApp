@@ -22,6 +22,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var messagesRef: DatabaseReference
     private lateinit var usersRef: DatabaseReference
+    private lateinit var storage: FirebaseStorage
+    private lateinit var imagesRef: StorageReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         database = Firebase.database
         messagesRef = database.getReference("messages")
         usersRef = database.getReference("users")
+        storage = FirebaseStorage.getInstance()
+        imagesRef = storage.getReference("chat_images")
 
         messageListView = findViewById(R.id.listView)
         val messages = mutableListOf<Message>()
